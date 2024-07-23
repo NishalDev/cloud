@@ -1,0 +1,53 @@
+!pip install mysql-connector-python
+
+import mysql.connector
+
+# Connect to MySQL server
+conn = mysql.connector.connect(
+    host="your_host",  # e.g., "localhost"
+    user="your_username",
+    password="your_password"
+)
+
+# Create a cursor object
+cursor = conn.cursor()
+
+# Create a new database
+cursor.execute("CREATE DATABASE my_new_database")
+
+# Confirm the database creation
+cursor.execute("SHOW DATABASES")
+
+import mysql.connector
+
+# Connect to MySQL server and the specific database
+conn = mysql.connector.connect(
+    host="your_host",  # e.g., "localhost"
+    user="your_username",
+    password="your_password",
+    database="my_new_database"  # The database you created earlier
+)
+
+# Create a cursor object
+cursor = conn.cursor()
+
+# Create a new table
+create_table_query = """
+CREATE TABLE my_new_table (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    age INT,
+    email VARCHAR(100)
+)
+"""
+
+cursor.execute(create_table_query)
+
+# Confirm the table creation
+cursor.execute("SHOW TABLES")
+for table in cursor:
+    print(table)
+
+# Close the cursor and connection
+cursor.close()
+conn.close()
