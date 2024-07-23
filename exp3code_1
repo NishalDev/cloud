@@ -1,0 +1,43 @@
+[10:37 AM, 7/5/2024] Hemanth: import boto3
+
+# Create an S3 client
+s3 = boto3.client('s3')
+
+# Call S3 to list current buckets
+response = s3.list_buckets()
+
+# Get a list of all bucket names from the response
+buckets = [bucket['Name'] for bucket in response['Buckets']]
+
+# Print out the bucket list
+print("Bucket List: %s" % buckets)
+[10:38 AM, 7/5/2024] Hemanth: import boto3
+
+s3 = boto3.client('s3')
+s3.create_bucket(Bucket='my-bucket
+[10:38 AM, 7/5/2024] Hemanth: import boto3
+
+# Create an S3 client
+s3 = boto3.client('s3')
+
+filename = 'file.txt'
+bucket_name = 'my-bucket'
+
+# Uploads the given file using a managed uploader, which will split up large
+# files automatically and upload parts in parallel.
+s3.upload_file(filename, bucket_name, filename)
+[10:38 AM, 7/5/2024] Hemanth: import boto3
+import botocore
+
+BUCKET_NAME = 'my-bucket' # replace with your bucket name
+KEY = 'my_image_in_s3.jpg' # replace with your object key
+
+s3 = boto3.resource('s3')
+
+try:
+    s3.Bucket(BUCKET_NAME).download_file(KEY, 'my_local_image.jpg')
+except botocore.exceptions.ClientError as e:
+    if e.response['Error']['Code'] == "404":
+        print("The object does not exist.")
+    else:
+        raise
